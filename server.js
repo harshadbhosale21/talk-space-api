@@ -22,7 +22,9 @@ const publicRoutes = require("./routes/publicRoutes.js");
 
 ConnectDB()
 
-// const app = express();
+//for serving static files
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"))
 
 //middlewares
 app.use(bodyParser.urlencoded({ extended: false, limit: '50mb', parameterLimit: 50000 }))
@@ -32,6 +34,10 @@ app.use(helmet());
 
 app.get('/api/checkUserToken', withUserAuth, function (req, res) {
     res.json({ id: req.uid }).status(200)
+});
+
+app.get("/", (req, res) => {
+    res.render("index")
 })
 
 //Routes setup
